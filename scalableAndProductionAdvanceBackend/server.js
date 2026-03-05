@@ -1,5 +1,5 @@
 import {app} from "./src/app.js"
 
 app.listen(3000, ()=>{
-    console.log("running")
+    console.log("running||professional server is running")
 });
