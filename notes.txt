@@ -1,0 +1,22 @@
+get - server se data fetch karna ho to
+post - server par data send karna ho to / ya kuch bhi create karne ke liye 
+patch - server par data hai aur use update karna ho to
+delete - server par data hai aur use delete karna ho to
+
+dynamic routing - ese " : " se use karte hai 
+routes ke andar jo dynamic part hota hai use hum params consider karte hai ya manate hai
+
+ACCESSING THE DYNAMIC ROUTING - req.params.jo bhi : ke baad name diya hai routes mai ya api mai
+
+
+crud operation - 
+
+read operation mai find() ka matlab fetch karna bhi hota hai na ki kewal find karna aur 
+ese hum get method se fetch karte hai kyuki server se data fetch karne ke liye get method hi use hota hai 
+
+aur find() hame ek array return karta hai hamesha 
+
+aur dusra method findOne() hame eske andar condition deni hoti hai ki kya kis tarah se find ya data fetch 
+karna hai
+
+find() ke andar bhi condition laga sakte hai agar chahe to
