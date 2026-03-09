@@ -20,3 +20,13 @@ aur dusra method findOne() hame eske andar condition deni hoti hai ki kya kis ta
 karna hai
 
 find() ke andar bhi condition laga sakte hai agar chahe to
+
+find() -  [{},{}] ya [] guarantee deta hai
+findOne() - {} ya null bas
+
+en dono upar find and findOne method mai {} eska matlab data hai
+
+
+jab hum delete method mai to sabse pahale dynamic approach lagate hai routes aur phir uske baad
+hum usme findOneAndDelete method ka use karte hai jisme hum agar condition hai ki id ke base par find
+karte hai to database mai _id hota hai har ek cheej ka jo ki database unique rakhta hai har kisi ke liye 
