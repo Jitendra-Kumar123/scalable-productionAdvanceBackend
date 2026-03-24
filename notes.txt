@@ -30,3 +30,7 @@ en dono upar find and findOne method mai {} eska matlab data hai
 jab hum delete method mai to sabse pahale dynamic approach lagate hai routes aur phir uske baad
 hum usme findOneAndDelete method ka use karte hai jisme hum agar condition hai ki id ke base par find
 karte hai to database mai _id hota hai har ek cheej ka jo ki database unique rakhta hai har kisi ke liye 
+
+patch method hum findOneAndUpdate ka use karte hai 
+findOneAndUpdate({}, {}) - pahale object mai kis ke base par find karna hai database mai aur dusre 
+object mai kya update karna hai
