@@ -34,3 +34,6 @@ karte hai to database mai _id hota hai har ek cheej ka jo ki database unique rak
 patch method hum findOneAndUpdate ka use karte hai 
 findOneAndUpdate({}, {}) - pahale object mai kis ke base par find karna hai database mai aur dusre 
 object mai kya update karna hai
+
+
+jin service ka use fix nhi rhta hai yani change bhi kar sakte hai baad mai wo service folder ke andar likhte hai
