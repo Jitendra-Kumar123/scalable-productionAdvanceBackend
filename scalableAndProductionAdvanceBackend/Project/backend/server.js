@@ -1,5 +1,5 @@
-import {app} from "./src/app.js"
-import { ConnectToDB } from "./src/db/db.js"
+import {app} from "../src/app.js"
+import { ConnectToDB } from "../src/db/db.js"
 
 
 
