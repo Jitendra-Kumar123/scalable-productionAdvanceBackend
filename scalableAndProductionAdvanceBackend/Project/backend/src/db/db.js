@@ -1,9 +1,14 @@
 import mongoose from "mongoose"
 
 async function ConnectToDB(){
-    await mongoose.connect(process.env.MONGODB_URI);
+    try{
+        await mongoose.connect(process.env.MONGODB_URI);
 
-    console.log("DataBase is connected");
+        console.log("DataBase is connected");
+    }catch(err){
+        console.log("error: ", err.message);
+    }
 }
+
 
 export {ConnectToDB};
