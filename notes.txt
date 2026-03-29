@@ -88,3 +88,24 @@ best pattern har import and export ke liye har folder ke liye -
 1. controllers - export default {}
 2. routes - export default router
 3. models - export const User = userModel / export default userModel
+
+
+Token generate karne ke liye jwt ka use karte hai 
+user ke sath token bhejne ke liye hame jwt.sign({}, ()) ka use karte hai
+
+jwt.sign({}, ()) - do cheeje follow karta hai 
+
+esme {} - esme unique data aayega aur mongodb mai hamare pas har kisi ke liye ek unique id banti hai 
+jise hum _id se represent karte hai aur ham user ke liye id create kar rhe hai to wo id user ki hui / user ka data 
+jo ki unique hona chahiye ya created user ka unique data
+
+jwt.sign({
+    id: user._id // esme id - wo id hai jo generate hogi, user - esme user wo hai jo create hua , _id - mongodb
+    har kisi user ya kisi ke liye unique id generate karta hai chahe kitne users ho, doesn't matter
+    ese ki madad se token generate hoga jo ki user ke sath jayega server par
+})
+
+aur esme () - us user ka data aayega jiske liye token generate kar rhe hai matlab JWT_SECRET key aayegi 
+
+
+aur token - ek val calculated string jo alag alag hoti hai har user ke liye server par bhejne ke liye
