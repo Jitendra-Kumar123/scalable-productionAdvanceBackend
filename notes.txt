@@ -72,6 +72,7 @@ esme hum api banate hai, jese hum pahale app.js file mai banate The
 
 controllers folder - 
 esme hum us api ka logic likhte hai jo hamne routes folder mai api banayi hai 
+aur controllers likhne ke liye async function controller_name(req, res){// eske andar api ka logic}
 
 aur hame app.js file ko batana bhi hota hai ki humne ek api banayi hai agar nhi batayenge to app.js
 ko pata nhi chalega ki api hai ya nhi 
@@ -82,3 +83,8 @@ jese ki /register name ke api hai to hamne app.js mai api batayi ki wo exist kar
 prefix use kiya to hame /api/auth/register likhna hoga es /register wali api ko access karne ke liye
 
 aur ye jo authRoutes hai wo import hua name jo bata rha hai ki kaha se api import hui hai
+
+best pattern har import and export ke liye har folder ke liye - 
+1. controllers - export default {}
+2. routes - export default router
+3. models - export const User = userModel / export default userModel
