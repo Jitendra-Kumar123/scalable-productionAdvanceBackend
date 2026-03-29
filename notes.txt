@@ -37,3 +37,22 @@ object mai kya update karna hai
 
 
 jin service ka use fix nhi rhta hai yani change bhi kar sakte hai baad mai wo service folder ke andar likhte hai
+
+
+Authentication System : 
+
+Authentication System mai char cheeje hoti hai 
+1.validation: validation ka matlab hota hai details/ data ka ek dum sahi hona yani data/details ka format sahi hona hai
+matlab data ek dum valid ho kuch bhi galat na ho , jese form mai bahut sare fields hote hai suppose agar mene mob. no.
+galat dal diya to wo valid nhi hai chahe sare fields ka data sahi ho yahi hota hai validation yani sara data valid ho
+
+2.verification: eska matlab data sahi hai ya nahi , man lete hai ek email hai wo check karne ke liye ki wo 
+ek real user ya data sahi hai to hum use verify karne ke liye OTP bhejenge
+
+
+difference : validation vs verification
+validation : data ka format sahi hona 
+verification: data jo hame mil rha hai sahi hona ya check karna
+
+3.Authentication - jis user se request aa rhi hai , us request se us user ko identify karna 
+4.authorization - ek user kya kya kar sakta hai matlab set of permissions
