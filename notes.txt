@@ -109,3 +109,25 @@ aur esme () - us user ka data aayega jiske liye token generate kar rhe hai matla
 
 
 aur token - ek val calculated string jo alag alag hoti hai har user ke liye server par bhejne ke liye
+
+
+hum token ko save ya store kane ke liye storage ka use karenge aur browser mai bahut tarah ke storage hote hai
+
+but hum cookie storage ka use karenge kyuki - 
+1. server direct access de deta hai cookie storage koi permissions nhi mangta hai
+2. jo cookie storage mai data hai use server padh sakta hai use modify kar sakta aur bahut kuch
+3. cookie storage ka admin access server ke pas rhta hai
+
+token ko cookie mai save karane ke liye - 
+res.cookie("token", token) - 
+esme "token" - ye wo name hai jisme hum cookie mai token save kar rhe hai
+esme token - ye jwt se generate hua token hai
+
+aur token ko access karne ke liye - 
+req.cookie() ka use karte hai
+
+
+token sahi hai ya nhi use janne ke liye hum - 
+jwt.verify(token, process.env.JWT_SECRET);
+
+ye wo token hai jo generate hua aur jwt.verify ye pata lagata hai ki token sahi hai ya nhi
