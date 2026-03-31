@@ -131,3 +131,15 @@ token sahi hai ya nhi use janne ke liye hum -
 jwt.verify(token, process.env.JWT_SECRET);
 
 ye wo token hai jo generate hua aur jwt.verify ye pata lagata hai ki token sahi hai ya nhi
+
+password hashing - ye ek plain text password ko unreadable and fixed code length mai convert kar deta hai jo baad mai reversible nhi hota hai 
+
+password hashing jaruri eseliye hai kyuki agar galati se hamara database corrupt ya leak/breach ho jaye to 
+jo hamara original password hai, wo unreadable rhe taki attackers/hackers attack/hack na kar sake
+
+hashing ek cryptographic algorithm hoti hai jisse hum plain text ko ek hash mai convert karte hai
+eski do properties hoti hai 
+1. agar hum ese same input dete hai to ye bhi hame same output deta hai, matlab agar hua same plain text
+dete hai to hame wahi same hash milega jo pahale mila tha change nhi hoga hash har baar
+2. hum plain text ko hash mai to convert kar sakte hai, par hash ko wapis se plain text mai convert
+nhi kar sakte 
