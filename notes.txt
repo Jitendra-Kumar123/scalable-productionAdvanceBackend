@@ -143,3 +143,33 @@ eski do properties hoti hai
 dete hai to hame wahi same hash milega jo pahale mila tha change nhi hoga hash har baar
 2. hum plain text ko hash mai to convert kar sakte hai, par hash ko wapis se plain text mai convert
 nhi kar sakte 
+
+jab hum user ko check karte hai ki wo pahale se exists karta hai ya nhi to hame find aur findOne method ka use
+karte hai to usme jyadatar time hum email ya username ke base par karte hai lekin ek rare situation bhi hai jisme ye kaam nhi karta hai 
+to hum 
+$or: [{}, {}]
+ka use karte hai esme do bracket jaruri nhi hai eska matlab hai ki hum do property ke regarding find kar rhe hai
+ $or: [
+    {username}, {email}
+ ]
+
+hame en dono condition mai se koi ek bhi satisfy ho jayegi to condition chal jayegi
+
+
+password hashing ke liye hum brcyptjs ka use karte hai jisme hum register karne ke time par password hash kar dete hai
+
+const hash = await bcrypt.hash(password, 10);
+
+esme password hamara wahi plainText hai jo hamne diya hai aur 10 ek salt aur salt ka kaam hota hai random unique value generate taki protection mil sake 
+yahi unique value aur hashed password ko hum login ke time par bhi use karte hai wahi unique value ko dekhne ke liye ki wo wahi hai na 
+
+aur login ke time par hame compare karna padta hai na hash
+
+const isPasswordValid = await bcrypt.compare(password, user.password);
+
+esme hum compare karte hai jo password hai hash ho chuka hai aur jo user ka password mila hai agar same hai to login kar sakte ho
+esme password hai jo password hamare pass se aa rha hai aur user.password hai jo password hamare database se aa rha hai aur ye user wo hai jo ham login ke time 
+find kar rhe hai, es method ka kaam ye hota hai ki pahale ye password ko hash mai convert karta hai aur phir compare
+
+database mai hum mongoose.Schema.Types.ObjectId ka use eska matlab hota hai ek document ko dusre document mai link karna 
+aur phir esme ref dete hai jo ki batata hai ki ye collection mai store hoga
