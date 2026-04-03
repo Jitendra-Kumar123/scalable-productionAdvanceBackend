@@ -1,10 +1,12 @@
 import express from "express";
-import musicController from "../controllers/music.controller";
-
+import musicController from "../controllers/music.controller.js";
+import multer from "multer"
 
 const router = express.Router();
 
-router.post("/create-music", musicController)
+const upload = multer({storage: multer.memoryStorage()});
+
+router.post("/create-music", upload.single("music"), musicController.createMusic);
 
 
 export default router;
