@@ -1,0 +1,2 @@
+jest - javascript mai likha gya code sahi se kaam kar rha hai ya nhi use test karne ke liye jest ka use karte hai
+aur jest ko use karne ke liye supertest ka bhi use karte hai
