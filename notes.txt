@@ -173,3 +173,16 @@ find kar rhe hai, es method ka kaam ye hota hai ki pahale ye password ko hash ma
 
 database mai hum mongoose.Schema.Types.ObjectId ka use eska matlab hota hai ek document ko dusre document mai link karna 
 aur phir esme ref dete hai jo ki batata hai ki ye collection mai store hoga
+
+
+album aur music create karne ke liye - 
+
+sabse pahale to check karo ki wo artist hai ya nhi, wo check karne ke liye token ka use karte hai
+pahale check karte hai ki token cookie mai store hai ya nahi, agar nhi hai to message show karo aur phir check karo ki 
+jo token cookie mai save hai wo us role artist se match karta hai ya nhi aur ye check karne ke liye hum jwt.verify 
+ka use karte hai aur phir music ya album create karte hai
+
+.populate() method ka use find() method ke just baad karte hai aur eska use hai ki hame jiski bhi details chahiye aur 
+kya kya details chahiye wo deta hai
+
+.find().populate("artist", "userName email") ab esme hame artist ki details milenge aur esme bhi userName aur email milegi
