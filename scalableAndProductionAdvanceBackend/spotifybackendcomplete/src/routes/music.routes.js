@@ -11,4 +11,10 @@ router.post("/create-music",authMiddleware.authArtist, upload.single("music"), m
 
 router.post("/album",authMiddleware.authArtist, musicController.createAlbum);
 
+router.get("/listen-music", authMiddleware.authUser, musicController.getAllMusic);
+
+router.get("/albums", authMiddleware.authUser, musicController.getAllAlbum);
+
+router.get("/album/:albumId", authMiddleware.authUser, musicController.getAlbumById);
+
 export default router;
