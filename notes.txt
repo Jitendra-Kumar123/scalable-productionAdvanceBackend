@@ -186,3 +186,7 @@ ka use karte hai aur phir music ya album create karte hai
 kya kya details chahiye wo deta hai
 
 .find().populate("artist", "userName email") ab esme hame artist ki details milenge aur esme bhi userName aur email milegi
+
+
+jest - javascript mai likha gya code sahi se kaam kar rha hai ya nhi use test karne ke liye jest ka use karte hai
+aur jest ko use karne ke liye supertest ka bhi use karte hai
