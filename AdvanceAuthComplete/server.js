@@ -1,7 +1,7 @@
-import ConnectDB from "./config/database.js";
+import ConnectToDB from "./config/database.js";
 import app from "./src/app.js";
 
-ConnectDB();
+ConnectToDB();
 
 
 app.listen(3000, ()=> {
