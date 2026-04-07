@@ -1,0 +1,9 @@
+config.js file ka use hum centralized access aur imports clean rhe matlab yah hai ki agar hamare pas 
+process.env.MONGO_URI aur es jese bahut sare ho to enhe use karne ke liye hum 
+
+const config = {
+    MONGO_URI: process.env.MONGO_URI
+}
+
+aur config ko export kar lete hai aur jab bhi hame process.env.MONGO_URI ki jarurat hoti hai to hum usme 
+config import karke bas config.MONGO_URI use kar lete hai taki imports clean rhe
