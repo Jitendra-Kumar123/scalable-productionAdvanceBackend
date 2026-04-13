@@ -29,15 +29,26 @@ export async function register(req, res){
         password: hashedPassword
     })
 
-    const token = jwt.sign({
+    const accessToken = jwt.sign({
         id: user._id
     },
      config.JWT_SECRET,
     {
-        expiresIn: '1d'
+        expiresIn: '15m'
     })
 
-    res.cookie("token", token);
+    const refreshToken = jwt.sign({
+        id: user._id
+    }, config.JWT_SECRET,{
+        expiresIn: '7d'
+    })
+
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000
+    });
 
     res.status(200).json({
         message: "User Registered Successfully",
@@ -46,7 +57,7 @@ export async function register(req, res){
             email: user.email,
             password: user.password
         },
-        token: token
+        accessToken: accessToken
     })
 }
 
@@ -72,4 +83,51 @@ export async function getMe(req, res){
     })
 
    
+}
+
+export async function refreshToken(req, res){
+    try{
+        const refreshToken = req.cookies.refreshToken;
+
+        if(!refreshToken){
+            return res.status(401).json({
+                message: "Refresh Token is not found"
+            })
+        }
+
+        const decoded = jwt.verify(refreshToken, config.JWT_SECRET);
+
+        const accessToken = jwt.sign(
+        {
+            id: decoded._id
+        }, 
+            config.JWT_SECRET, 
+        {
+            expiresIn: '15m'
+        });
+
+        const newRefreshToken = jwt.sign({
+            id: decoded._id
+        }, config.JWT_SECRET, {
+            expiresIn: '7d'
+        })
+
+        res.cookie("newRefreshToken", newRefreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+
+        return res.status(200).json({
+            message: "Access Token Refresh Successfully", 
+            accessToken
+        })
+
+    }catch(err){
+        return res.status(403).json({
+            message: "Invalid or Token expired",
+            err
+        })
+    }
 }

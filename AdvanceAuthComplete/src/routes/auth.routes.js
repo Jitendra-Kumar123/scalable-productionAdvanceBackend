@@ -1,8 +1,9 @@
 import express from "express"
-const router = express.Router();
+const authRouter = express.Router();
 import * as authController from "../controllers/auth.controller.js"
 
-router.post("/register", authController.register);
-router.get("/get-me", authController.getMe);
+authRouter.post("/register", authController.register);
+authRouter.get("/get-me", authController.getMe);
+authRouter.get("/refresh-token", authController.refreshToken);
 
-export default router;
+export default authRouter;

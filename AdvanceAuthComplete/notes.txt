@@ -34,3 +34,27 @@ ye bearer aur phir uske baad space aur phir generated token dete hai
 
 aur [1] aur eska kaam hai only token ko lena kyuki ye array mai hai aur hamne authorization mai 
 "bearer token" diya tha aur arrya 0 index se start hota hai aur esme abhi 1 index par wo token hai eseliye 
+
+
+Refresh Token --------------------------------------------------------------
+jab kisi dusre user ko kis dusre user ka token ya details mil jati hai to wo uske sath kuch bhi ched chad kar sakata hai, aur ye ek acchi baat nhi hai to hame refresh aur access token
+ka use karna padata hai,
+
+Token Storage ---------
+token ko local Storage mai save kara sakte hai but ye safe nhi hai kyuki jab bhi hum browser close karte hai tab bhi token wahi rhta hai aur agar kisi attacker ko token chahiye hoga to wo simple ek script chaleyega aur direct access kar lega
+token ko cookies mai bhi save karte hai par wo agar api hit karke bhi direct access leleta hai
+
+to eseliye hum memory ka use karte hai kyuki jab bhi hum reload karte hai to token refresh ya gayab ya hat jata hai
+ye persistent hota hai, but hume esa nhi chahiye ki memory mai reload karte hai token khali ho jaye , to eska 
+solution hai ki hum tokens use karenge
+1. access token
+2. refresh token
+
+1. access token ------- access token ko hum normal token ki tarah hi treat karte hai ye bas server se user identify karne ke liye hota hai, server esi se pata lagata hai ki kis user ne request ki hai 
+
+2. refresh token --------- refresh token kaam ka access token ko generate karna hota hai bas har bar naya access token, jab bhi hum refresh token ka use karte hai to refresh token hamesha ek refresh api generate
+karta hai aur us api par jane ke liye refresh token ki need padti hai
+
+storing access token and refresh token ----------
+access token ko hum memory mai aur refresh token ko hum cookies mai rakhte hai, enki expiration limit bhi hoti hai
+access token ki expiration limit max 15 min hoti hai aur refresh token ki expiration limit hum 7 din and  aur bhi badha dete hai
