@@ -7,3 +7,30 @@ const config = {
 
 aur config ko export kar lete hai aur jab bhi hame process.env.MONGO_URI ki jarurat hoti hai to hum usme 
 config import karke bas config.MONGO_URI use kar lete hai taki imports clean rhe
+
+
+
+
+request se user ko identify karna / server kese identify karega ki ye request kon sa user karega - 
+
+user ki detail lene ke liye hum ek api endpoint create kar rhe hai getMe name se aur eska logic 
+ye hoga ki jo bhi registerd user hai uska hum token verify karenge agar match ho gya token to usi user ko 
+details share karni hai
+
+aur ye sab token hum headers mai store karte hai 
+
+jab hum ye identify karte hai ki request kis user ne ki hai to hum use
+
+    const token = req.headers.authorization?.split(" ") [1];
+
+ye token hamesha headers mai hota hai aur headers ki value authorization hoti hai jisme hum headers mai se
+token nikalne  ke liye authorization ka use karte hai
+
+hum industry standard ke hissab se "bearer token"
+
+ye bearer aur phir uske baad space aur phir generated token dete hai
+
+?.split(" ") eska kaam hai do parts mai break karna 
+
+aur [1] aur eska kaam hai only token ko lena kyuki ye array mai hai aur hamne authorization mai 
+"bearer token" diya tha aur arrya 0 index se start hota hai aur esme abhi 1 index par wo token hai eseliye 
