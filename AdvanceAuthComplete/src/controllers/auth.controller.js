@@ -78,6 +78,68 @@ export async function register(req, res){
     })
 }
 
+export async function login(req, res){
+    const {email, password} = req.body;
+
+    const user = await userModel.find({
+        email: email
+    })
+
+    if(!user){
+        return res.status(400).json({
+            message: "Invalid email or password"
+        })
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.hashedPassword);
+
+    if(!isPasswordValid){
+        return res.status(401).json({
+            message: "Invalid email or password"
+        })
+    }
+
+    const refreshToken = jwt.sign({
+        id: user._id
+    }, config.JWT_SECRET, 
+    {
+        expiresIn: '7d'
+    })
+
+    const refreshTokenHash = await bcrypt.hash(password, 10);
+
+    const session = await sessionModel.create({
+        user: user._id,
+        refreshTokenHash,
+        ip: req.ip,
+        userAgent: req.headers["user-agent"]
+    })
+
+    const accessToken = jwt.sign({
+        id: user._id,
+        sessionId: session._id
+    }, config.JWT_SECRET,
+    {
+       expiresIn: '15m' 
+    })
+
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000
+    })
+
+    res.status(200).json({
+        message: 'logged in successfully',
+        user: {
+            user: user._id,
+            email: user.email
+        },
+        accessToken
+    })
+}
+
 export async function getMe(req, res){
     const token = req.headers.authorization?.split(" ") [1];
 
@@ -117,7 +179,7 @@ export async function refreshToken(req, res){
         const refreshTokenHash = await bcrypt.hash(password, 10);
 
         const session = await sessionModel.findOne({
-            refreshTokenHash,
+            password: refreshTokenHash,
             revoked: false
         })
 
@@ -141,6 +203,11 @@ export async function refreshToken(req, res){
         }, config.JWT_SECRET, {
             expiresIn: '7d'
         })
+
+        const newRefreshTokenHash = await bcrypt.hash(password, 10);
+
+        session.refreshTokenHash = newRefreshTokenHash;
+        await session.save();
 
         res.cookie("newRefreshToken", newRefreshToken, {
             httpOnly: true,
@@ -175,7 +242,7 @@ export async function logout (req, res){
         const refreshTokenHash = await bcrypt.hash(password, 10);
 
         const session = await sessionModel.findOne({
-            refreshTokenHash,
+            password: refreshTokenHash,
             revoked: false
         })
 
@@ -200,4 +267,27 @@ export async function logout (req, res){
             message: "No logout session perform"
         })
     }
+}
+
+export async function logoutAllDevices(req, res){
+    const refreshToken = req.cookies.refreshToken;
+
+    if(!refreshToken){
+        return res.status(400).json({
+            message: "RefreshToken Not Found"
+        })
+    }
+
+    const decoded = jwt.verify(refreshToken, config.JWT_SECRET);
+
+    await sessionModel.updateMany({
+        user: decoded.id,
+        revoked: false,
+    },
+    {
+        revoked: true
+    })
+
+    res.clearCookie("refreshToken");
+
 }
