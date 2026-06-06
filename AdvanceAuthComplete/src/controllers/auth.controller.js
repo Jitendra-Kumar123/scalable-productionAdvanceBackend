@@ -114,6 +114,19 @@ export async function refreshToken(req, res){
 
         const decoded = jwt.verify(refreshToken, config.JWT_SECRET);
 
+        const refreshTokenHash = await bcrypt.hash(password, 10);
+
+        const session = await sessionModel.findOne({
+            refreshTokenHash,
+            revoked: false
+        })
+
+        if(!session){
+            return res.status(401).json({
+                message: "Invalid RefreshToken"
+            })
+        }
+
         const accessToken = jwt.sign(
         {
             id: decoded._id
@@ -162,7 +175,7 @@ export async function logout (req, res){
         const refreshTokenHash = await bcrypt.hash(password, 10);
 
         const session = await sessionModel.findOne({
-            refreshToken: refreshTokenHash,
+            refreshTokenHash,
             revoked: false
         })
 
