@@ -66,3 +66,14 @@ session ki id yani sessionId ko hum access token mai save karate hai aur session
 token aur phir refresh token ko hash karte hai aur phir session id banate hai jise accesstoken mai save karate hai
 
 refresh token dubara generate na ho eseliye refresh token se pahale check karte hai refreshtokenHash aur session find karte hai
+
+
+sesssion based auth mai sabse pahale refresh token generate karte hai phir session aur session se pahale aur refresh token generate karne ke baad
+refreshtokenHash generate karte hai aur session jab banate hai to usme 
+
+user: user._id,
+refreshtokenHash,
+ip: req.ip,
+userAgent: req.headers["user-agent"]
+
+aur phir uske baad access token generate karte hai 
