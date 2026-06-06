@@ -58,3 +58,11 @@ karta hai aur us api par jane ke liye refresh token ki need padti hai
 storing access token and refresh token ----------
 access token ko hum memory mai aur refresh token ko hum cookies mai rakhte hai, enki expiration limit bhi hoti hai
 access token ki expiration limit max 15 min hoti hai aur refresh token ki expiration limit hum 7 din and  aur bhi badha dete hai
+
+
+userAgent ka use hum user ke browser ke bare mai sari details nikalne ke liye karte hai
+ip ko save karane ke liye req.ip aur userAgent ke liye req.headers['user-agent'] ka use karte hai
+session ki id yani sessionId ko hum access token mai save karate hai aur sessionId banane se pahale hume refresh
+token aur phir refresh token ko hash karte hai aur phir session id banate hai jise accesstoken mai save karate hai
+
+refresh token dubara generate na ho eseliye refresh token se pahale check karte hai refreshtokenHash aur session find karte hai
