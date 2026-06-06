@@ -3,6 +3,7 @@ import crypto from "crypto"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import {config} from "../config/config.js"
+import {sessionModel} from "../model/session.model.js"
 
 export async function register(req, res){
     const {userName, email, password} = req.body;
@@ -29,19 +30,35 @@ export async function register(req, res){
         password: hashedPassword
     })
 
-    const accessToken = jwt.sign({
+    const refreshToken = jwt.sign({
         id: user._id
+    }, config.JWT_SECRET,{
+        expiresIn: '7d'
+    })
+
+    const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+
+    const session = await sessionModel.create({
+        userName: user._id,
+        refreshTokenHash,
+        ip: req.ip,
+        userAgent: req.headers['user-agent']
+    })
+
+    const accessToken = jwt.sign({
+        id: user._id,
+        sessionId: session._id
     },
      config.JWT_SECRET,
     {
         expiresIn: '15m'
     })
 
-    const refreshToken = jwt.sign({
-        id: user._id
-    }, config.JWT_SECRET,{
-        expiresIn: '7d'
-    })
+    // const refreshToken = jwt.sign({
+    //     id: user._id
+    // }, config.JWT_SECRET,{
+    //     expiresIn: '7d'
+    // })
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -128,6 +145,46 @@ export async function refreshToken(req, res){
         return res.status(403).json({
             message: "Invalid or Token expired",
             err
+        })
+    }
+}
+
+export async function logout (req, res){
+    try{
+        const refreshToken = req.cookies.refreshToken;
+
+        if(!refreshToken){
+            return res.status(401).json({
+                message: "refresh token not found"
+            })
+        }
+
+        const refreshTokenHash = await bcrypt.hash(password, 10);
+
+        const session = await sessionModel.findOne({
+            refreshToken: refreshTokenHash,
+            revoked: false
+        })
+
+        if(!session){
+            return res.status(400).json({
+                message: "invalid refresh token"
+            })
+        }
+
+        session.revoked = true;
+        await session.save();
+
+        res.clearCookie(refreshToken);
+
+        res.status(200).json({
+            message: "LoggedOut Successfully"
+        })
+    }
+    catch(err){
+        console.log("logout error: ", err);
+        res.status(401).json({
+            message: "No logout session perform"
         })
     }
 }
