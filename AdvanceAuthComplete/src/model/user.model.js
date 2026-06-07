@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "password is required"],
         unique: [true, "password must be unique"],
         trim: true
+    },
+    verified: {
+        type: Boolean,
+        default: false
     }
 })
 
