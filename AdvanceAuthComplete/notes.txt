@@ -77,3 +77,10 @@ ip: req.ip,
 userAgent: req.headers["user-agent"]
 
 aur phir uske baad access token generate karte hai 
+
+Authentication ka ek or part hota hai - 
+otp based authentication - esme hum email ko verify karte hai ki wo valid hai ya nhi 
+
+ye authentication implement karne ke liye hame email send karna hota hai aur ese hum nodemailer se karenge 
+
+otp based authentication mai refresh , session aur access token ki jarurat nhi hoti hai registration time par
